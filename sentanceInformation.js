@@ -24,7 +24,4 @@ function getSentanceInformation(...sentances){
 
 sentance = getSentanceInformation("Hello world", "ababa", "This is good");
 
-
-console.log(sentance.wordCount);
-
-console.log(sentance.letterCount);
+console.log(sentance.sentanceCount)
