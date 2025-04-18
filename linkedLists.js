@@ -23,7 +23,7 @@ const linkedList = {
     },
 
     removeLast(){
-        if (this.head === null) { return };
+        if (this.head === null) { return }
 
         if (this.head.next === null){
             this.head = null;
@@ -44,16 +44,13 @@ const linkedList = {
 
     listCount(){
         let count = 0;
-
         let current = this.head;
         while (current !== null) {
             current = current.next;
             count++;
         }
 
-
-        console.log(`The count is: ${count }`)
-        return;
+        return count;
     },
     print(){
         if (this.head === null) { 
@@ -76,10 +73,4 @@ list.add("Yoan");
 list.add("Arthur");
 
 
-list.listCount()
 
-list.removeFirst()
-
-list.listCount()
-
-list.print()
