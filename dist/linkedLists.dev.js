@@ -53,23 +53,14 @@ var linkedList = {
   },
   listCount: function listCount() {
     var count = 0;
-
-    if (this.head === null) {
-      return 0;
-    }
-
-    if (this.head.next === null) {
-      return 1;
-    }
-
     var current = this.head;
 
-    while (current.next !== null) {
+    while (current !== null) {
       current = current.next;
-      count += 1;
+      count++;
     }
 
-    console.log("The count is: ".concat(count + 1));
+    console.log("The count is: ".concat(count));
     return;
   },
   print: function print() {
@@ -91,3 +82,7 @@ var list = linkedList;
 list.add("Edward");
 list.add("Yoan");
 list.add("Arthur");
+list.listCount();
+list.removeFirst();
+list.listCount();
+list.print();
