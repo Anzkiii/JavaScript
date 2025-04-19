@@ -104,11 +104,35 @@ var linkedList = {
     }
 
     return -1;
+  },
+  insertAt: function insertAt(value, index) {
+    if (index < 0 || index > this.listCount()) {
+      return;
+    }
+
+    if (index === 0) {
+      this.head = createNode(value, this.head);
+      return;
+    }
+
+    var node = createNode(value);
+    var current = this.head;
+    var count = 0;
+    var previous;
+
+    while (count < index) {
+      previous = current;
+      count++;
+      current = current.next;
+    }
+
+    node.next = current;
+    previous.next = node;
   }
 };
 var list = linkedList;
 list.addLast("Edward");
 list.addLast("Yoan");
 list.addLast("Arthur");
-console.log(list.searchValue("Arthur"));
-console.log(list.searchIndex("Arthur"));
+list.insertAt("Reem", 1);
+list.print();

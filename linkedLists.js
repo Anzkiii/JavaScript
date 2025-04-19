@@ -91,6 +91,45 @@ const linkedList = {
             index++;
         }
         return -1;
+    },
+
+    insertAt(value, index){
+
+        if (index < 0 || index > this.listCount()){
+            return;
+        }
+
+        if (index === 0){
+            this.head = createNode(value, this.head);
+            return;
+        }
+
+        const node = createNode(value);
+        let current = this.head;
+        let count = 0;
+        let previous;
+
+        while (count < index){
+            previous = current;
+            count++;
+            current = current.next;
+        }
+
+        node.next = current;
+        previous.next = node;
+    },
+
+    reverseList(){
+
+        let current = this.head;
+        let previous;
+        while (current){
+            previous = current;
+            current = current.next;
+        }
+        previous.next = this.head;
+        console.log(previous.next)
+
     }
 }
 
@@ -100,5 +139,6 @@ list.addLast("Edward");
 list.addLast("Yoan");
 list.addLast("Arthur");
 
-console.log(list.searchValue("Arthur"))
-console.log(list.searchIndex("Arthur"))
+list.insertAt("Reem", 1);
+list.reverseList();
+list.print();
