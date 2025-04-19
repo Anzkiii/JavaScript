@@ -8,7 +8,7 @@ function createNode(value){
 const linkedList = {
     head: null,
 
-    add(value){
+    addLast(value){
         const newNode = createNode(value);
 
         if (this.head === null){
@@ -20,6 +20,10 @@ const linkedList = {
             }
             current.next = newNode;
         }
+    },
+
+    addFirst(value){
+        this.head = new createNode(value, this.head);
     },
 
     removeLast(){
@@ -63,14 +67,38 @@ const linkedList = {
             console.log(current.value)
             current = current.next;
         }
+    },
+
+    searchValue(value){
+        let current = this.head;
+        
+        while (current){
+            if (current.value === value){
+                return current.value;
+            }
+            current = current.next;
+        }
+        return "Value not found";
+    },
+
+    searchIndex(value){
+        let current = this.head;
+        let index = 0;
+
+        while (current){
+            if (current.value === value) { return index; }
+            current = current.next;
+            index++;
+        }
+        return -1;
     }
 }
 
 var list = linkedList
 
-list.add("Edward");
-list.add("Yoan");
-list.add("Arthur");
+list.addLast("Edward");
+list.addLast("Yoan");
+list.addLast("Arthur");
 
-
-
+console.log(list.searchValue("Arthur"))
+console.log(list.searchIndex("Arthur"))
