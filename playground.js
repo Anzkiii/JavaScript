@@ -1,115 +1,73 @@
 
 
 
-function Node(value, next = null){
-    return{
-        value:value,
-        next,
+class Node {
+    constructor(value, next = null){
+        this.value = value;
+        this.next = next;
     }
 }
 
-const ll = {
-
-    head:null,
-
+class linkedList {
+    constructor(head = null){
+        this.head = null;
+    }
     insertLast(value){
-        const newNode = Node(value);
+        let newNode = new Node(value);
         if (this.head === null){
             this.head = newNode;
             return;
         }
-
         let current = this.head;
-
         while (current.next !== null){
             current = current.next;
         }
-
         current.next = newNode;
-    },
+    }
 
     print(){
-        if (this.head === null){ return; }
+        if (this.head === null) { return; }
         let current = this.head;
-        while (current){
+        while (current !== null){
             console.log(current.value);
             current = current.next;
         }
-    },
-
-    getSum(){
-
-        if (this.head === null) { return; }
-
-        let current = this.head;
-        let count = 0;
-
-        while (current !== null){
-            count += current.value;
-            current = current.next;
-        }
-        console.log(count);
-    },
-
-    // search(value){
-
-    //     let current = this.head;
-
-    //     while (current !== null){
-
-    //         if (current.value == value){
-    //             return true;
-    //         }
-    //         current = current.next;
-    //     }
-    //     return false;
-    // },
-
-    search(value, current = this.head){
-
-        if (current === null) return false;
-
-        if (current.value == value){
-            return true;
-        }
-        console.log(current.value)
-        return this.search(value, current.next);
-    },
-
-    getNodeValue(index){
-
-        if (this.head === null) { return; }
-        if (index >= this.getLinkedListLength() || index < 0) { return "Out of range!";}
-        
-        let current = this.head;
-        let count = 0;
-        
-        while (count < index ){
-            current = current.next;
-            count++;
-        }
-        return current.value;
-    },
-
-    getLinkedListLength(){
-
-        if (this.head === null) {return 0; }
-
-        let current = this.head;
-        let counter = 0;
-
-        while (current !== null){
-            current = current.next;
-            counter++;
-        }
-        return counter;
     }
 
+    zipList(head1,head2){
+        let tail = head1;
+        let current1 = head1.next;
+        let current2 = head2;
+        let count = 0;
+
+        while (current1 !== null && current2 !== null) {
+            if (count % 2 == 0){
+                tail.next = current2;
+                current2 = current2.next;
+            } else {
+                tail.next = current1;
+                current1 = current1.next
+            }
+            tail = tail.next
+            count++;
+        }
+        if (current1 !== null) { tail.next = current1;}
+        if (current2 !== null) { tail.next = current2;}
+        
+        return head1;
+    }
 }
+const ll1 = new linkedList();
+const ll2 = new linkedList();
 
-ll.insertLast(2)
-ll.insertLast(8)
-ll.insertLast(3)
-ll.insertLast(7)
+ll1.insertLast(1);
+ll1.insertLast(2);
 
-console.log(ll.getNodeValue());
+ll2.insertLast(5);
+ll2.insertLast(6);
+
+
+const ll3 = new linkedList();
+ll3.head = ll1.zipList(ll1.head, ll2.head);
+
+ll3.print()
