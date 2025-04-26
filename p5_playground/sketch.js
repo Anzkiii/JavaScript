@@ -1,38 +1,64 @@
 
-
 let height = 800;
 let width = 1600;
 
-function setup(){
-    createCanvas(width, height);
-}
-
-let inc = 0.01; // controls how "stretched" the wave is
-
-function draw() {
-    background(222);
-
-    let yoff = 0;
-    loadPixels()
-    for (let x = 0; x < width; x++) {
-        let xoff = 0;
-        for (let y = 0; y < height; y++){
-
-            let index = (x + y * width) *  4
-            
-            let n = (noise(xoff, yoff) * 255) 
-            pixels[index + 0] = n 
-            pixels[index + 1] = n 
-            pixels[index + 2] = n 
-            pixels[index + 3] = 255
-            xoff += inc;
-        }
-        yoff += inc;
+class Walker{
+    constructor(width = 800, height = 400){
+        this.height = height;
+        this.width = width;
     }
-    
-    updatePixels()
-    noLoad();
 }
 
+function setup(){
+    createCanvas(width, height)
+    frameRate(30)
+    background(230)
+}
+
+function getDirection(){
+
+    return floor(random(0,4))
+
+}
+
+const walker = new Walker();
+let walkerArr = []
+
+
+function draw(){
+
+    stroke(70)
+    strokeWeight(6)
+
+
+    for (x in walkerArr){
+        point(walkerArr[x].width, walkerArr[x].height)
+    }
+
+    switch (getDirection()){
+        case 0:
+            walker.width += 5;
+            break;
+        case 1:
+            walker.width -= 5;
+            break;
+        case 2:
+            walker.height += 5;
+            break;
+        case 3:
+            walker.height -= 5;
+            break
+    }
+
+    let alreadyVisited = walkerArr.some(prevWalker => walker.width === prevWalker.width && walker.height === prevWalker.height)
+
+    if (!alreadyVisited){
+        point(walker.height, walker.width)
+        walkerArr.push(new Walker(walker.width, walker.height))
+    }
+
+    
+
+}
 
 
