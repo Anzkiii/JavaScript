@@ -1,37 +1,38 @@
 
 
-let height = 660;
-let width = 1515;
-
-class pnt{
-    constructor(){
-        this.height = 0;
-        this.width = 0;
-    }
-}
-pntArray = []
-for (let x = 0; x < width; x++){
-    pntArray.push(new pnt())
-}
+let height = 800;
+let width = 1600;
 
 function setup(){
     createCanvas(width, height);
 }
 
-function draw(){
+let inc = 0.01; // controls how "stretched" the wave is
+
+function draw() {
     background(222);
-    
 
-    for (var x = 0; x < width; x++){
-        let noiseValue = noise(x * 0.01, frameCount * 0.005)
-        pntArray[x].height = map(noiseValue, 0, 1, 0, height)
-        pntArray[x].width = x
-    
-        let pointerHeight = pntArray[x].height;
-        let pointerWidth = x
-    
-        strokeWeight(6)
-        point(pointerWidth, pointerHeight)
+    let yoff = 0;
+    loadPixels()
+    for (let x = 0; x < width; x++) {
+        let xoff = 0;
+        for (let y = 0; y < height; y++){
+
+            let index = (x + y * width) *  4
+            
+            let n = (noise(xoff, yoff) * 255) 
+            pixels[index + 0] = n 
+            pixels[index + 1] = n 
+            pixels[index + 2] = n 
+            pixels[index + 3] = 255
+            xoff += inc;
+        }
+        yoff += inc;
     }
-
+    
+    updatePixels()
+    noLoad();
 }
+
+
+
