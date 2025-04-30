@@ -16,7 +16,7 @@ let bomb = "💣"
 let seven = "7️⃣"
 let key = "🔑"
 let box = "🎁"
-
+let symbolArray = [star, blueberry, strawberry, bomb, seven, key, box];
 const gambler = new Person("Edward")
 
 function deposit(person){
@@ -28,12 +28,32 @@ function deposit(person){
     console.log(`${person.name}, you successfuly deposited ${depositAmount}$`);
 }
 
-function determinePayout(person, array){
+function determinePayout(person, array, bet){
 
-    let counter = 0;
-
+    let reelDictMultipliers = {"⭐":5, "🫐": 3, "🍓": 3, "💣": 10, "7️⃣":15, "🔑":10 ,"🎁":15}
     
+    for (subArray in array){
 
+        for (symbol in symbolArray){
+            if (array[subArray].every(x => symbolArray[symbol] == x)){
+                let winningSymbol = array[subArray][0]
+                bet *= parseInt(reelDictMultipliers[winningSymbol])
+
+                person.balance += bet
+                console.log(`You won on line ${parseInt(subArray) + 1} with ${symbolArray[symbol]}. You have ${person.balance} dollars left`);
+            } 
+            if (array[subArray][0] == symbolArray.at(-2) && array[subArray][1] == symbolArray.at(-1) && array[subArray][2] == symbolArray.at(-2)){
+                bet *= 150;
+                person.balance += bet
+                console.log(`CONGRATULATIONS YOU WON 150X!!! YOU NOW HAVE: ${person.balance} dollars`);
+            }
+        
+        }  
+    }
+    person.balance -= bet;
+    console.log(`You lost: ${bet}, you have ${person.balance} dollars left`); 
+    
+    return gamble(person)
 }
 
 function gamble(person){
@@ -46,19 +66,21 @@ function gamble(person){
     if (isNaN(lines) || lines <= 0 || lines >= 4){
         throw new Error("Enter a valid number please!")
     }
-    person.balance -= bet;
-
     let linesArray = new Array(lines).fill([]).map(() => [])
 
-
-    let symbolArray = [star, blueberry, strawberry, bomb, seven, key, box];
 
     for (arr of linesArray){
         for (x = 0; x <= 2; x++){
             arr.push(symbolArray[Math.floor(Math.random()*symbolArray.length)])
         }
     }
-    determinePayout(person, linesArray)
+
+    for (x of linesArray){
+        console.log(x);
+    }
+    determinePayout(person, linesArray, bet)
+
+    
     
 
 }
