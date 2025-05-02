@@ -31,28 +31,36 @@ function deposit(person){
 function determinePayout(person, array, bet){
 
     let reelDictMultipliers = {"⭐":5, "🫐": 3, "🍓": 3, "💣": 10, "7️⃣":15, "🔑":10 ,"🎁":15}
-    
+    let amountOfWins = 0;
+    let isWinning = false;
     for (subArray in array){
-
+        
         for (symbol in symbolArray){
             if (array[subArray].every(x => symbolArray[symbol] == x)){
+                
                 let winningSymbol = array[subArray][0]
                 bet *= parseInt(reelDictMultipliers[winningSymbol])
-
-                person.balance += bet
+                if (amountOfWins > 0){
+                    person.balance += bet * (amountOfWins * 5);
+                } else { person.balance += bet; }
                 console.log(`You won on line ${parseInt(subArray) + 1} with ${symbolArray[symbol]}. You have ${person.balance} dollars left`);
-            } 
-            if (array[subArray][0] == symbolArray.at(-2) && array[subArray][1] == symbolArray.at(-1) && array[subArray][2] == symbolArray.at(-2)){
-                bet *= 150;
+                isWinning = true;
+                amountOfWins++;
+                break;
+            } else if (array[subArray][0] == symbolArray.at(-2) && array[subArray][1] == symbolArray.at(-1) && array[subArray][2] == symbolArray.at(-2)){
+                bet *= 150 * (amountOfWins * 5);
                 person.balance += bet
                 console.log(`CONGRATULATIONS YOU WON 150X!!! YOU NOW HAVE: ${person.balance} dollars`);
+                isWinning = true;
+                amountOfWins++;
+                break;
             }
-        
         }  
     }
-    person.balance -= bet;
-    console.log(`You lost: ${bet}, you have ${person.balance} dollars left`); 
-    
+    if (!isWinning){
+        person.balance -= bet;
+        console.log(`You lost ${bet}. ${person.balance} dollars left`);
+    }
     return gamble(person)
 }
 
