@@ -48,9 +48,10 @@ function determinePayout(person, array, bet){
                 amountOfWins++;
                 break;
             } else if (array[subArray][0] == symbolArray.at(-2) && array[subArray][1] == symbolArray.at(-1) && array[subArray][2] == symbolArray.at(-2)){
-                bet *= 150 * (amountOfWins * 5);
-                person.balance += bet
-                console.log(`CONGRATULATIONS YOU WON 150X!!! YOU NOW HAVE: ${person.balance} dollars`);
+                if (amountOfWins > 0){
+                    person.balance += (bet * 150) * (amountOfWins * 5);
+                } else { person.balance += bet * 150; }
+                console.log(`CONGRATULATIONS YOU WON THE JACKPOT!!! YOU NOW HAVE: ${person.balance} dollars`);
                 isWinning = true;
                 amountOfWins++;
                 break;
